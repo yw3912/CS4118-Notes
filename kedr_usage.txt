@@ -1,0 +1,26 @@
+We typically use kedr to check memory leaks for linux modules.
+
+1. Make sure linux modules work.
+
+2. Install CMake: sudo apt-get install -y cmake
+
+3. Run this: cd ~ && rm -rf kedr && git clone https://github.com/cs4118/kedr && cd kedr/sources && mkdir build && cd build && cmake .. && make -j$(nproc) && sudo make install
+
+   If using arm processor, run "sudo reboot now" after that.
+
+How to use:
+
+	cd ~/kedr/sources/build
+
+	sudo dmesg -w
+
+	sudo kedr start <module name (without .ko)>
+
+	while (you want to repeatedly check for memory leak) {
+		sudo insmod <module name>.ko
+		run test program
+		sudo rmmod <module name>
+		look at dmesg
+	}
+
+	sudo kedr stop
